@@ -1,11 +1,10 @@
 import React from 'react';
-import useFetch from '../Hooks/useFetch';
+import PropTypes from 'prop-types';
 import TableBody from './TableBody';
 import TableHead from './TableHead';
 
-export default function Table() {
-  const BASE_URL = 'https://swapi.dev/api/planets';
-  const { planets } = useFetch(BASE_URL);
+export default function Table(props) {
+  const { planets } = props;
   return (
     <table>
       <TableHead />
@@ -13,3 +12,7 @@ export default function Table() {
     </table>
   );
 }
+
+Table.propTypes = {
+  planets: PropTypes.shape({}),
+}.isRequired;
