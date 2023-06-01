@@ -14,20 +14,19 @@ function App() {
   const numericFilter = ({ comparison, value, column }, planetsData) => {
     switch (comparison) {
     case 'maior que':
-      return planetsData.filter((planet) => planet[column] > value);
+      return planetsData.filter((planet) => Number(planet[column]) > value);
     case 'menor que':
-      return planetsData.filter((planet) => planet[column] < value);
+      return planetsData.filter((planet) => Number(planet[column]) < value);
     case 'igual a':
-      return planetsData.filter((planet) => planet[column] === value);
+      return planetsData.filter((planet) => Number(planet[column]) === value);
     default:
       return planetsData;
     }
   };
 
   const filterPlanets = () => {
-    const filteredByName = filteredPlanets.length === 0
+    const filteredByName = filterName === ''
       ? planets : planets.filter((planet) => planet.name.includes(filterName));
-    console.log(filteredByName);
     return filtersNumeric
       .reduce((planetsData, filt) => numericFilter(filt, planetsData), filteredByName);
   };

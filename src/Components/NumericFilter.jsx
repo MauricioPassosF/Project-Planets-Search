@@ -14,7 +14,7 @@ export default function NumericFilter(props) {
     const filterObject = {
       column: columnFilter,
       comparison: comparisonFilter,
-      value: valueFilter,
+      value: Number(valueFilter),
     };
     setFiltersNumeric([...filtersNumeric, filterObject]);
   };
