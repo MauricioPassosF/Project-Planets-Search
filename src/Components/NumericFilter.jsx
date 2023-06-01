@@ -12,15 +12,12 @@ export default function NumericFilter(props) {
   const comparisonOptions = ['maior que', 'menor que', 'igual a'];
 
   useEffect(() => {
-    console.log(columnsOptions);
-    console.log(filtersNumeric);
     setColumnsOption(filtersNumeric
       .reduce((acc, { column }) => acc
         .filter((option) => option !== column), allColumnsOptions));
   }, [filtersNumeric]);
 
   useEffect(() => {
-    console.log(columnsOptions[0]);
     setColumnFilter(columnsOptions[0]);
   }, [columnsOptions]);
 

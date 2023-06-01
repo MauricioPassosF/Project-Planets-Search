@@ -3,6 +3,7 @@ import './App.css';
 import useFetch from './Hooks/useFetch';
 import Table from './Components/Table';
 import NumericFilter from './Components/NumericFilter';
+import Filters from './Components/Filters';
 
 function App() {
   const [filteredPlanets, setFilteredPlanets] = useState([]);
@@ -48,6 +49,16 @@ function App() {
         onChange={ (e) => setFilterName(e.target.value) }
       />
       <NumericFilter
+        filtersNumeric={ filtersNumeric }
+        setFiltersNumeric={ setFiltersNumeric }
+      />
+      <button
+        data-testid="button-remove-filters"
+        onClick={ () => setFiltersNumeric([]) }
+      >
+        Limpar Filtros
+      </button>
+      <Filters
         filtersNumeric={ filtersNumeric }
         setFiltersNumeric={ setFiltersNumeric }
       />
