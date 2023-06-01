@@ -1,14 +1,28 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function NumericFilter(props) {
   const [columnFilter, setColumnFilter] = useState('population');
   const [comparisonFilter, setComparisonFilter] = useState('maior que');
   const [valueFilter, setValueFilter] = useState(0);
   const { setFiltersNumeric, filtersNumeric } = props;
-  const columnsOptions = ['population', 'orbital_period',
+  const allColumnsOptions = ['population', 'orbital_period',
     'diameter', 'rotation_period', 'surface_water'];
+  const [columnsOptions, setColumnsOption] = useState(allColumnsOptions);
   const comparisonOptions = ['maior que', 'menor que', 'igual a'];
+
+  useEffect(() => {
+    console.log(columnsOptions);
+    console.log(filtersNumeric);
+    setColumnsOption(filtersNumeric
+      .reduce((acc, { column }) => acc
+        .filter((option) => option !== column), allColumnsOptions));
+  }, [filtersNumeric]);
+
+  useEffect(() => {
+    console.log(columnsOptions[0]);
+    setColumnFilter(columnsOptions[0]);
+  }, [columnsOptions]);
 
   const handleButton = () => {
     const filterObject = {
