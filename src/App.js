@@ -15,15 +15,14 @@ function App() {
   const { planets } = useFetch(BASE_URL);
 
   const numericFilter = ({ comparison, value, column }, planetsData) => {
-    switch (comparison) {
-    case 'maior que':
+    if (comparison === 'maior que') {
       return planetsData.filter((planet) => Number(planet[column]) > value);
-    case 'menor que':
+    }
+    if (comparison === 'menor que') {
       return planetsData.filter((planet) => Number(planet[column]) < value);
-    case 'igual a':
+    }
+    if (comparison === 'igual a') {
       return planetsData.filter((planet) => Number(planet[column]) === value);
-    default:
-      return planetsData;
     }
   };
 

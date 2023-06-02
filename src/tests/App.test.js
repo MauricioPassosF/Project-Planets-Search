@@ -18,17 +18,14 @@ describe('Testes do App', () => {
   });
 
   it('Existe título na página', () => {
+    render(<App />);
     screen.getByRole('heading', { name: /star wars planet filter/i, level: 1 })
   });
 
-  it.only('O fetch é executado somente uma vez, assim que a pagina é renderizada', async () => {
+  it('O fetch é executado somente uma vez, assim que a pagina é renderizada', async () => {
 
   render(<App />);
     expect(global.fetch).toBeCalledWith(BASE_URL)
-    expect(global.fetch).toHaveBeenCalledTimes(1)
-
-    // await waitFor(() => expect(global.fetch).toBeCalledWith(BASE_URL))
-    // await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(1))
-    
+    expect(global.fetch).toHaveBeenCalledTimes(1)    
   });
 });
