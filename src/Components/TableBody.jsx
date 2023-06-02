@@ -7,7 +7,7 @@ export default function TableBody(props) {
     <tbody className="table-body">
       {planets.map((planet) => (
         <tr key={ planet.name } className="table-body-row">
-          <td className="table-body-element">{planet.name}</td>
+          <td className="table-body-element" data-testid="planet-name">{planet.name}</td>
           <td className="table-body-element">{planet.rotation_period}</td>
           <td className="table-body-element">{planet.orbital_period}</td>
           <td className="table-body-element">{planet.diameter}</td>

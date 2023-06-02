@@ -4,11 +4,13 @@ import useFetch from './Hooks/useFetch';
 import Table from './Components/Table';
 import NumericFilter from './Components/NumericFilter';
 import Filters from './Components/Filters';
+import Sort from './Components/Sort';
 
 function App() {
   const [filteredPlanets, setFilteredPlanets] = useState([]);
   const [filterName, setFilterName] = useState('');
   const [filtersNumeric, setFiltersNumeric] = useState([]);
+  const [sort, setSort] = useState({});
   const BASE_URL = 'https://swapi.dev/api/planets';
   const { planets } = useFetch(BASE_URL);
 
@@ -36,6 +38,21 @@ function App() {
     setFilteredPlanets(filterPlanets());
   }, [filterName, filtersNumeric]);
 
+  const sortPlanets = (planetsFiltreredInfo) => (sort === {}
+    ? planetsFiltreredInfo : planetsFiltreredInfo
+      .sort((firstE, secondE) => {
+        const negNumber = -1;
+        const posNumber = 1;
+        if (firstE[sort.column] === 'unknown') {
+          return posNumber;
+        }
+        if (secondE[sort.column] === 'unknown') {
+          return negNumber;
+        }
+        const sortValue = Number(firstE[sort.column]) - Number(secondE[sort.column]);
+        return sort.type === 'ASC' ? sortValue : sortValue * negNumber;
+      }));
+
   return (
     <>
       <h1>Star Wars Planet Filter</h1>
@@ -62,7 +79,12 @@ function App() {
         filtersNumeric={ filtersNumeric }
         setFiltersNumeric={ setFiltersNumeric }
       />
-      <Table planets={ filteredPlanets.length === 0 ? planets : filteredPlanets } />
+      <Sort sort={ sort } setSort={ setSort } />
+      <Table
+        planets={ sortPlanets(
+          filteredPlanets.length === 0 ? planets : filteredPlanets,
+        ) }
+      />
     </>
   );
 }

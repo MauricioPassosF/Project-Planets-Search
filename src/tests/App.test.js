@@ -1,12 +1,20 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import App from '../App';
+import testData from '../../cypress/mocks/testData';
 
 describe('Testes do App', () => {
   const BASE_URL = 'https://swapi.dev/api/planets';
 
   beforeEach(() => {
-    render(<App />);
+    jest.spyOn(global, 'fetch');
+    global.fetch.mockResolvedValue({
+    json: jest.fn().mockResolvedValue(testData),
+  });
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks()
   });
 
   it('Existe título na página', () => {
@@ -14,14 +22,13 @@ describe('Testes do App', () => {
   });
 
   it.only('O fetch é executado somente uma vez, assim que a pagina é renderizada', async () => {
-    jest.spyOn(global,"fetch")
-    .mockResolvedValue({
-      json: jest.fn().mockResolvedValue({
 
-      })
-    });
-    await waitFor(() => expect(global.fetch).toBeCalledWith(BASE_URL))
-    await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(1))
+  render(<App />);
+    expect(global.fetch).toBeCalledWith(BASE_URL)
+    expect(global.fetch).toHaveBeenCalledTimes(1)
+
+    // await waitFor(() => expect(global.fetch).toBeCalledWith(BASE_URL))
+    // await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(1))
     
   });
 });
