@@ -39,26 +39,16 @@ describe("6 - Não utilize filtros repetidos", () => {
 
     cy.addFilter("population", "maior que", "8000");
 
-    cy.getByTestId(COLUMN_FILTER).find('option').should((options) => {
-      expect(options).to.have.length(allColumnsOptions.length - 1);
+    cy.get("table tr").should("have.length", FILTERED_ROWS_COUNT_POPULATION);
 
-      expect(options).to.not.contain('population');
-    });
+    cy.getByTestId(COLUMN_FILTER)
+      .find("option")
+      .should((options) => {
+        expect(options).to.have.length(allColumnsOptions.length - 1);
+
+        expect(options).to.not.contain("population");
+      });
   });
-// it('Filtre por diâmetro e o remove das opções', () => {
-//   const allColumnsOptions = ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
-
-//     cy.get("table tr").should("have.length", FILTERED_ROWS_COUNT_POPULATION);
-
-
-//     cy.getByTestId(COLUMN_FILTER)
-//       .find("option")
-//       .should((options) => {
-//         expect(options).to.have.length(allColumnsOptions.length - 1);
-
-//         expect(options).to.not.contain("population");
-//       });
-//   });
 
   it("Filtre por diâmetro e o remove das opções", () => {
     const allColumnsOptions = [
